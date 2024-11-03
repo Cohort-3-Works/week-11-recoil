@@ -1,4 +1,5 @@
 import { useEffect, useState, memo } from "react";
+import PropTypes from "prop-types";
 
 export function Counter3() {
   const [count, setCount] = useState(0);
@@ -6,12 +7,22 @@ export function Counter3() {
   useEffect(() => {
     setInterval(() => {
       setCount((c) => c + 1);
-    }, 300);
+    }, 3000);
   }, []);
+
+  // useEffect(() => {
+  //   // Set interval to increment count every 3000 milliseconds (3 seconds)
+  //   const intervalId = setInterval(() => {
+  //     setCount((c) => c + 1);
+  //   }, 3000);
+
+  //   // Cleanup the interval on component unmount
+  //   return () => clearInterval(intervalId);
+  // }, []);
 
   return (
     <>
-      <CurrentCount></CurrentCount>
+      <CurrentCount count={count}></CurrentCount>
       <br />
       <Increase></Increase>
       <Decrease></Decrease>
@@ -19,10 +30,10 @@ export function Counter3() {
   );
 }
 
-const CurrentCount = memo(function CurrentCount() {
+const CurrentCount = memo(function CurrentCount({ count }) {
   return (
     <div>
-      <h1>Hi there</h1>
+      <h1>{count}</h1>
     </div>
   );
 });
@@ -56,3 +67,7 @@ const Decrease = memo(function Decrease() {
     </>
   );
 });
+
+CurrentCount.propTypes = {
+  count: PropTypes.func.isRequired,
+};
